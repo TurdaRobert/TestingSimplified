@@ -1,0 +1,506 @@
+{% load static %}
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>TestPage</title>
+{#    <link rel="stylesheet" href={% static 'styles/test.css' %}>#}
+    <link rel="stylesheet" href={% static 'styles/bootstrap.css' %}>
+    <link rel="stylesheet" href={% static 'styles/bootstrap.min.css' %}>
+    <style>
+        .list-group-item{
+            min-height: 50px;
+        }
+    </style>
+
+</head>
+
+<body style="background: var(--bs-yellow);">
+    <nav class="d-flex flex-row justify-content-xxl-end align-items-xxl-center" style="background: #ff9d00;border-width: 2px;border-style: solid;">
+        <h1 style="padding-left: 0px;padding-right: 0px;margin-left: 56px;margin-right: 56px;"><a href="http://127.0.0.1:8000/myapp/home/{{ test.project_id }}/{{ user.id }}">TestingSimplified</a></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col d-xxl-flex justify-content-xxl-end align-items-xxl-center"><a href="http://127.0.0.1:8000/myapp/practice/{{ user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-left: 6px;margin-right: 6px;">Essence Practice Explanation</button></a><a href="http://127.0.0.1:8000/myapp/activityflow/{{ user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-left: 6px;margin-right: 6px;">Activity Flow</button></a><a href="http://127.0.0.1:8000/myapp/profile/{{ user.id }}/{{ user.id }}"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">User Profile</button></a></div>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 10px;margin-bottom: 10px;border-width: 2px;border-style: solid;">
+        <div class="row d-flex">
+            <div class="col-md-8 col-xxl-4 offset-xxl-0 d-flex" style="border: 2px solid var(--bs-emphasis-color) ;height: 900px;">
+                <div class="row d-flex">
+                    <div class="col-xxl-12 d-flex d-xxl-flex justify-content-end align-items-center flex-wrap align-items-sm-center justify-content-xxl-end align-items-xxl-center" style="padding-top: 10px;padding-bottom: 10px;">
+                        <form action="{% url 'test' test.pk user.id%}" method="get">
+                            {%csrf_token%}
+                            <input class="form-control-lg" type="search" placeholder="Search project by title.." name="search">
+                            <button class="btn btn-warning btn-lg justify-content-xxl-end" type="submit" style="border: 2px solid var(--bs-btn-disabled-color) ;">Search</button></form>
+                    </div>
+                    <div class="col-xxl-12" style="padding-top: 10px;padding-bottom: 10px;">
+                        <ul class="list-group" style="max-height: 720px; overflow: scroll; -webkit-overflow-scrolling: touch;">
+                            {%  for project in projects %}
+                                <a href="http://127.0.0.1:8000/myapp/home/{{ test.project.pk }}/{{ user.id }}" class="list-group-item"><span>{{ project.title }}</span></a>
+                            {% endfor %}
+                            {% for i in range %}
+                                 <li class="list-group-item"><span> </span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <form action="{% url 'test' test.id user.id %}" method="post" name="logout">
+                    <div class="col d-flex flex-column" style="padding-top: 10px;padding-bottom: 10px;">
+                            {%csrf_token%}
+                        <button class="btn btn-warning" type="submit" style="margin-top: 10px;margin-bottom: 10px;border: 2px solid var(--bs-btn-disabled-color) ;" name="test" value="logout">LogOut</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col" style="border: 2px solid var(--bs-emphasis-color) ; height: 900px; overflow: scroll">
+                <div class="row">
+                    <div class="col d-xxl-flex justify-content-xxl-start align-items-xxl-center">
+                        <h2>{{ test.title }}</h2>
+                    </div>
+                    <div class="col d-xxl-flex justify-content-xxl-end align-items-xxl-center">
+                        {% if user2test == None %}
+                            <form action="{% url 'test' test.pk user.id%}" method="post" name="assignTest">
+                                {%csrf_token%}
+                                <button class="btn btn-warning" type="submit" value="assignTest" name="test" style="margin-left: 5px;margin-right: 5px;border: 2px solid var(--bs-emphasis-color) ;">Assign</button>
+                            </form>
+
+                        {% else %}
+                            <form action="{% url 'test' test.id user.id %}" method="post" name="abandonTest">
+                                <div>
+                                {%csrf_token%}
+                                    <button class="btn btn-warning d-xxl-flex justify-content-xxl-center" type="submit" style="margin-top: 10px;margin-bottom: 10px;border: 2px solid var(--bs-btn-disabled-color) ;" name="test" value="abandonTest">Abandon</button>
+                                </div>
+                            </form>
+                            <div>
+                                <a class="btn btn-warning d-xxl-flex justify-content-xxl-center" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-2" href="#modal-2" role="button" style="margin-left: 5px;margin-right: 5px;border: 2px solid var(--bs-btn-disabled-color) ;">Edit</a>
+                            </div>
+                            <div>
+                                <a class="btn btn-warning d-xxl-flex justify-content-xxl-center" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-status" href="#modal-status" role="button" style="margin-left: 5px;margin-right: 5px;border: 2px solid var(--bs-btn-disabled-color) ;">Change Status</a>
+                            </div>
+                        {% endif %}
+
+
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h2>Status: <span id="test_status"></span></h2>
+                        <h6>Priority: {{ test.priority }}</h6>
+                        <h6>Responsible user:</h6>
+                        {% for reuser in responsibleUsers %}
+                            <a href="http://127.0.0.1:8000/myapp/profile/{{ reuser.user.id }}/{{ user.id }}" ><span>{{ reuser.user.username }}</span></a>
+                        {% endfor %}
+                        <h6>Outcome: {{ test.outcome }}</h6>
+                    </div>
+
+                    <hr>
+
+                    <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h5>Test description</h5><textarea class="form-control-lg" readonly="" style="width: auto;">{{ test.description }}</textarea>
+                    </div>
+
+                    <hr>
+
+                    <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h5>Prerequisites</h5><textarea class="form-control-lg" readonly="" style="width: auto;">{{ test.prerequisites }}</textarea>
+                    </div>
+
+                    <hr>
+
+                    <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h5>Steps to test</h5><textarea class="form-control-lg" style="width: auto;" readonly="">{{ test.steps }}</textarea>
+                    </div>
+
+                    <hr>
+
+                    <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h5>Attached content</h5>
+                        <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-2" href="#collapse-2" role="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">Show Content</a>
+                            <div class="collapse" id="collapse-2">
+                                <ul class="list-group">
+                                    {% for img in content%}
+                                        <a class="list-group-item bos" href="#modal-display-content" aria-controls="modal-display-content" data-bs-toggle="modal" aria-expanded="false" id="linkModal{{ img.id }}" name="epic">{{ img.content }}</a>
+{#                                           <a class="btn btn-warning d-xxl-flex justify-content-xxl-center" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-2" href="#modal-2" role="button" style="margin-left: 5px;margin-right: 5px;border: 2px solid var(--bs-btn-disabled-color) ;">Edit</a>#}
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h5>Completion Status</h5>
+                        <h6>Defined:</h6>
+                        <div style="display: block">
+                        <input id="defined1" type="checkbox" disabled>
+                        <label for="defined1">The test's purpose and objectives are clear</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="defined2" type="checkbox" disabled>
+                        <label for="defined2">It is clear when and why the test will be run</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="defined3" type="checkbox" disabled>
+                        <label for="defined3">How to execute the test is clear</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="defined4" type="checkbox" disabled>
+                        <label for="defined4">The criteria for evaluating the test are clear</label>
+                        </div>
+
+                        <h6>Specified:</h6>
+                        <div style="display: block">
+                        <input id="specified1" type="checkbox" disabled>
+                        <label for="specified1">The test scenarios are clear</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified2" type="checkbox" disabled>
+                        <label for="specified2">The test cases are specifically identified</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified3" type="checkbox" disabled>
+                        <label for="specified3">The test's inputs and outputs are clear</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified4" type="checkbox" disabled>
+                        <label for="specified4">The test script is clear and repeatable</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified5" type="checkbox" disabled>
+                        <label for="specified5">The evaluation procedure is clear</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified6" type="checkbox" disabled>
+                        <label for="specified6">The resources needed to run the test are clear</label>
+                        </div>
+
+                        <h6>Executed:</h6>
+                        <div style="display: block">
+                        <input id="executed1" type="checkbox" disabled>
+                        <label for="executed1">The test has been carried out</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="executed2" type="checkbox" disabled>
+                        <label for="executed2">The test outputs have been captured and recorded</label>
+                        </div>
+
+                        <h6>Evaluated:</h6>
+                        <div style="display: block">
+                        <input id="evaluated1" type="checkbox" disabled>
+                        <label for="evaluated1">The test results have been evaluated and the success criteria have been applied</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="evaluated2" type="checkbox" disabled>
+                        <label for="evaluated2">The outcome of the test (pass, fail or undetermined) is clearly indicated</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="evaluated3" type="checkbox" disabled>
+                        <label for="evaluated3">The states have been updated or appropriate bugs have been created</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+     <div class="modal fade" role="dialog" tabindex="-1" id="modal-2">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit test</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'test' test.id user.id%}" method="post" name="editTest">
+                        {%csrf_token%}
+                    <p>Test Prerequisites</p><textarea name="t_preq">{{ test.prerequisites }}</textarea>
+                    <p>Test Priority</p>
+                        <label for="t_prio">Select priority level:</label>
+                        <select name="t_prio" id="t_prio">
+                            <option value="MINOR" >MINOR</option>
+                            <option value="MAJOR">MAJOR</option>
+                            <option value="CRITICAL">CRITICAL</option>
+                        </select>
+                    <p>Test Description</p><textarea name="t_desc">{{ test.description }}</textarea>
+                    <p>Test Steps</p><textarea name="t_steps">{{ test.steps }}</textarea>
+                    <p>Test Results</p><textarea name="t_results">{{ test.results }}</textarea>
+                        <p>Test attachments</p>
+                        <a class="btn btn-primary" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-content" href="#modal-content" role="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">Add Content</a>
+
+                        <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" name="test" value="editTest">Save</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-status">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit status</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'test' test.id user.id%}" method="post" name="statusTest">
+                        {%csrf_token%}
+
+                        {% if test_status.defined_1 == 1 and  test_status.defined_2 == 1 and test_status.defined_3 == 1 and test_status.defined_4 == 1 %}
+                        <p>Specified:</p>
+                        <div style="display: block">
+                        <input id="specified11" name="specified11" type="checkbox" value="True">
+                        <label for="specified11">The test scenarios are clear</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified12" name="specified12" type="checkbox" value="True">
+                        <label for="specified12">The test cases are specifically identified</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified13" name="specified13" type="checkbox" value="True">
+                        <label for="specified13">The test's inputs and outputs are clear</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified14" name="specified14" type="checkbox" value="True">
+                        <label for="specified14">The test script is clear and repeatable</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified15" name="specified15" type="checkbox" value="True">
+                        <label for="specified15">The evaluation procedure is clear</label>
+                        </div>
+
+                        <div style="display: block">
+                        <input id="specified16" name="specified16" type="checkbox" value="True">
+                        <label for="specified16">The resources needed to run the test are clear</label>
+                        </div>
+
+
+                            {% if test_status.specified_1 == 1 and test_status.specified_2 == 1 and test_status.specified_3 == 1 and test_status.specified_4 == 1 and test_status.specified_5 == 1 and test_status.specified_6 == 1 %}
+                            <br>
+                            <p>Executed:</p>
+                            <div style="display: block">
+                            <input id="executed11" name="executed11" type="checkbox" value="True">
+                            <label for="executed11">The test has been carried out</label>
+                            </div>
+
+                            <div style="display: block">
+                            <input id="executed12" name="executed12" type="checkbox" value="True">
+                            <label for="executed12">The test outputs have been captured and recorded</label>
+                            </div>
+
+
+                                {% if test_status.executed_1 == 1 and test_status.executed_2 == 1 %}
+                                <br>
+                                <p>Evaluated:</p>
+                                <div style="display: block">
+                                <input id="evaluated11" name="evaluated11" type="checkbox" value="True">
+                                <label for="evaluated11">The test results have been evaluated and the success criteria have been applied</label>
+                                </div>
+
+                                <div style="display: block">
+                                <input id="evaluated12" name="evaluated12" type="checkbox" value="True">
+                                <label for="evaluated12">The outcome of the test (pass, fail or undetermined) is clearly indicated</label>
+                                </div>
+
+                                <div style="display: block">
+                                <input id="evaluated13" name="evaluated13" type="checkbox" value="True">
+                                <label for="evaluated13">The states have been updated or appropriate bugs have been created</label>
+                                </div>
+
+
+                                    {% if test_status.evaluated_1 == 1 and test_status.evaluated_2 == 1 and test_status.evaluated_3 == 1 %}
+                                    <br>
+                                    <div style="display: block">
+                                    <p>Outcome:</p>
+                                    <label for="t_outc">Select priority level:</label>
+                                    <select name="t_outc" id="t_outc">
+                                        <option value="PASSED">PASSED</option>
+                                        <option value="FAILED">FAILED</option>
+                                        <option value="UNDETERMINED">UNDETERMINED</option>
+                                    </select>
+                                    </div>
+                                    {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        {% endif %}
+                        <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" name="test" value="statusTest">Save</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-content">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add Content</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'test' test.id user.id %}" method="post" enctype="multipart/form-data" name="addContent">
+                        {%csrf_token%}
+                        <p>Add an image to help the tester</p>
+                        {{ imgform.as_p }}
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" value="addContent" name="test">Save</button></div>
+            </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-display-content">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Selected Image</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                        <img id="imageModal" src="" alt="failed to load" width="100%" height="500px">
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src={% static 'script/bug.js' %}></script>
+    <script>
+        const defined1 = document.querySelector("#defined1");
+        const defined2 = document.querySelector("#defined2");
+        const defined3 = document.querySelector("#defined3");
+        const defined4 = document.querySelector("#defined4");
+        const specified1 = document.querySelector("#specified1");
+        const specified2 = document.querySelector("#specified2");
+        const specified3 = document.querySelector("#specified3");
+        const specified4 = document.querySelector("#specified4");
+        const specified5 = document.querySelector("#specified5");
+        const specified6 = document.querySelector("#specified6");
+        const executed1 = document.querySelector("#executed1");
+        const executed2 = document.querySelector("#executed2");
+        const evaluated1 = document.querySelector("#evaluated1");
+        const evaluated2 = document.querySelector("#evaluated2");
+        const evaluated3 = document.querySelector("#evaluated3");
+
+        const specified11 = document.querySelector("#specified11");
+        const specified12 = document.querySelector("#specified12");
+        const specified13 = document.querySelector("#specified13");
+        const specified14 = document.querySelector("#specified14");
+        const specified15 = document.querySelector("#specified15");
+        const specified16 = document.querySelector("#specified16");
+        const executed11 = document.querySelector("#executed11");
+        const executed12 = document.querySelector("#executed12");
+        const evaluated11 = document.querySelector("#evaluated11");
+        const evaluated12 = document.querySelector("#evaluated12");
+        const evaluated13 = document.querySelector("#evaluated13");
+
+        const test_outcome = document.querySelector("#test_outcome");
+        const test_status = document.querySelector("#test_status")
+
+        {% if test_status.defined_1 == 1 %}
+            defined1.checked = true;
+        {% endif %}
+        {% if test_status.defined_2 == 1 %}
+            defined2.checked = true;
+        {% endif %}
+        {% if test_status.defined_3 == 1 %}
+            defined3.checked = true;
+        {% endif %}
+        {% if test_status.defined_4 == 1 %}
+            defined4.checked = true;
+        {% endif %}
+        {% if test_status.specified_1 == 1 %}
+            specified1.checked = true;
+            specified11.checked = true;
+        {% endif %}
+        {% if test_status.specified_2 == 1 %}
+            specified2.checked = true;
+            specified12.checked = true;
+        {% endif %}
+        {% if test_status.specified_3 == 1 %}
+            specified3.checked = true;
+            specified13.checked = true;
+        {% endif %}
+        {% if test_status.specified_4 == 1 %}
+            specified4.checked = true;
+            specified14.checked = true;
+        {% endif %}
+        {% if test_status.specified_5 == 1 %}
+            specified5.checked = true;
+            specified15.checked = true;
+        {% endif %}
+        {% if test_status.specified_6 == 1 %}
+            specified6.checked = true;
+            specified16.checked = true;
+        {% endif %}
+        {% if test_status.executed_1 == 1 %}
+            executed1.checked = true;
+            executed11.checked = true;
+        {% endif %}
+        {% if test_status.executed_2 == 1 %}
+            executed2.checked = true;
+            executed12.checked = true;
+        {% endif %}
+        {% if test_status.evaluated_1 == 1 %}
+            evaluated1.checked = true;
+            evaluated11.checked = true;
+        {% endif %}
+        {% if test_status.evaluated_2 == 1 %}
+            evaluated2.checked = true;
+            evaluated12.checked = true;
+        {% endif %}
+        {% if test_status.evaluated_3 == 1 %}
+            evaluated3.checked = true;
+            evaluated13.checked = true;
+        {% endif %}
+
+        {% if test_status.defined_1 == 1 and test_status.defined_2 == 1 and test_status.defined_3 == 1 and test_status.defined_4 == 1 %}
+            test_status.innerText = 'Created';
+            {% if test_status.specified_1 == 1 and test_status.specified_2 == 1 and test_status.specified_3 == 1 and test_status.specified_4 == 1 and test_status.specified_5 == 1 and test_status.specified_6 == 1 %}
+                test_status.innerText = 'Ready for testing';
+                {% if test_status.executed_1 == 1 or test_status.executed_2 == 1 %}
+                    test_status.innerText = 'In progress';
+                {% endif %}
+                {% if test_status.executed_1 == 1 and test_status.executed_2 == 1 %}
+                    test_status.innerText = 'In progress';
+                    {% if test_status.evaluated_1 == 1 and test_status.evaluated_2 == 1 and test_status.evaluated_3 == 1 %}
+                        test_status.innerText = 'Finished';
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+
+
+        var links = document.querySelectorAll('a.bos')
+
+        links.forEach(function (link){
+            link.addEventListener('click',function (){
+                console.log('da')
+                const img = document.querySelector("#imageModal");
+
+                img.src = '/static/media/' + link.innerText;
+            });
+        });
+
+    </script>
+</body>
+
+</html>

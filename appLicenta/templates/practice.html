@@ -1,0 +1,344 @@
+{% load static %}
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>PracticeExplanation</title>
+{#    <link rel="stylesheet" href={% static 'styles/practice.css' %}>#}
+    <link rel="stylesheet" href={% static 'styles/bootstrap.css' %}>
+    <link rel="stylesheet" href={% static 'styles/bootstrap.min.css' %}>
+    <style>
+        .list-group-item{
+            min-height: 50px;
+        }
+    </style>
+</head>
+
+<body style="background: var(--bs-yellow);">
+    <nav class="d-flex flex-row justify-content-xxl-end align-items-xxl-center" style="background: #ff9d00;border-width: 2px;border-style: solid;">
+        <h1 style="padding-left: 0px;padding-right: 0px;margin-left: 56px;margin-right: 56px;"><a href="http://127.0.0.1:8000/myapp/home/{{ project.id }}/{{ user.id }}">TestingSimplified</a></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col d-xxl-flex justify-content-xxl-end align-items-xxl-center"><a href="http://127.0.0.1:8000/myapp/practice/{{ user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-left: 6px;margin-right: 6px;">Essence Practice Explanation</button></a><a href="http://127.0.0.1:8000/myapp/activityflow/{{ user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-left: 6px;margin-right: 6px;">Activity Flow</button></a><a href="http://127.0.0.1:8000/myapp/profile/{{ user.id }}/{{ user.id }}"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">User Profile</button></a></div>
+            </div>
+            </div>
+    </nav>
+    <div class="container" style="margin-top: 10px;margin-bottom: 10px;border-width: 2px;border-style: solid;">
+        <div class="row d-flex">
+            <div class="col-md-8 col-xxl-4 offset-xxl-0 d-flex" style="border: 2px solid var(--bs-emphasis-color) ;height: 900px;">
+                <div class="row d-flex">
+                    <div class="col-xxl-12 d-flex d-xxl-flex justify-content-end align-items-center flex-wrap align-items-sm-center justify-content-xxl-end align-items-xxl-center" style="padding-top: 10px;padding-bottom: 10px;">
+                        <form action="{% url 'practice' user.id %}" method="get">
+                            {%csrf_token%}
+                            <input class="form-control-lg" type="search" placeholder="Search project by title.." name="search">
+                            <button class="btn btn-warning btn-lg justify-content-xxl-end" type="submit" style="border: 2px solid var(--bs-btn-disabled-color) ;">Search</button></form>
+                    </div>
+                    <div class="col-xxl-12" style="padding-top: 10px;padding-bottom: 10px;">
+                        <ul class="list-group" style="max-height: 720px; overflow: scroll; -webkit-overflow-scrolling: touch;">
+                            {%  for project in projects %}
+                                <a href="http://127.0.0.1:8000/myapp/home/{{ project.id }}/{{ user.id }}" class="list-group-item"><span>{{ project.title }}</span></a>
+                            {% endfor %}
+                            {% for i in range %}
+                                 <li class="list-group-item"><span> </span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <form action="{% url 'practice' user.id %}" method="post" name="logout">
+                    <div class="col d-flex flex-column" style="padding-top: 10px;padding-bottom: 10px;">
+
+                            {%csrf_token%}
+                        <button class="btn btn-warning" type="submit" style="margin-top: 10px;margin-bottom: 10px;border: 2px solid var(--bs-btn-disabled-color) ;" name="save" value="logout">LogOut</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col" style="border: 2px solid var(--bs-emphasis-color) ; height: 900px; overflow: scroll;">
+                <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-1" href="#collapse-1" role="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-top: 5px;margin-bottom: 5px;">Bug</a>
+                    <div class="collapse" id="collapse-1">
+                        <div class="accordion" role="tablist" id="accordion-1">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-1" aria-expanded="false" aria-controls="accordion-1 .item-1">Overview</button></h2>
+                                <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-1">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">An error, flaw, or fault in a Software System that causes it to fail to perform as required.</span><br><span style="color: rgb(0, 0, 0);">Bugs are inevitable part of software development, and threaten the success of any software engineering endeavor.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-2" aria-expanded="false" aria-controls="accordion-1 .item-2">States</button></h2>
+                                <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-1">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><strong><span style="color: rgb(234, 117, 2);">Detected:</span></strong><span style="color: rgb(0, 0, 0);">An error, fault or flaw in the Software System is observed and logged.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Located:</span></strong><span style="color: rgb(0, 0, 0);">The cause of the Bug in the Software System has been found.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Fixed:</span></strong><span style="color: rgb(0, 0, 0);">The Bug has been removed from the Software System.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Closed:</span></strong><span style="color: rgb(0, 0, 0);">The removal of the Bug from the Software System has been confirmed.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-3" aria-expanded="false" aria-controls="accordion-1 .item-3">Essential qualities</button></h2>
+                                <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-1">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">The priority and impact of the bug is clearly described.</span><br><span style="color: rgb(0, 0, 0);">The bug clearly identifies the location of the problem and the circumstances under which it was discovered.</span><br><span style="color: rgb(0, 0, 0);">The bug can be readily reproduced from the information provided.</span><br><span style="color: rgb(0, 0, 0);">The impact that the bug has on subsequent development activities is understood.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-1 .item-4" aria-expanded="false" aria-controls="accordion-1 .item-4">Evaluation</button></h2>
+                                <div class="accordion-collapse collapse item-4" role="tabpanel" data-bs-parent="#accordion-1">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">The evaluation of the bugs aims at ensuring that they are actual bugs and not just misinterpretations of the system’s behavior or specification.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-2" href="#collapse-2" role="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-top: 5px;margin-bottom: 5px;">Test</a>
+                    <div class="collapse" id="collapse-2">
+                        <div class="accordion" role="tablist" id="accordion-2">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-1" aria-expanded="false" aria-controls="accordion-2 .item-1">Overview</button></h2>
+                                <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-2">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">A test:</span><br><span style="color: rgb(0, 0, 0);">Verifies an aspect of the system</span><br><span style="color: rgb(0, 0, 0);">Validates that the functionality of the system has been appropriately implemented</span><br><span style="color: rgb(0, 0, 0);">Demonstrates that the system provides the desired quality of service.</span><br><br><span style="color: rgb(0, 0, 0);">A test is not limited to verifying only functional requirements. Tests are defined to verify any aspect of the system, including performance, load, reliability, etc. Tests are often repeated to observe changes in results. See the Hints and Tips section for more information.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-2" aria-expanded="false" aria-controls="accordion-2 .item-2">States</button></h2>
+                                <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-2">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><strong><span style="color: rgb(234, 117, 2);">Defined:</span></strong><span style="color: rgb(0, 0, 0);">A test must be conceived and scoped to fit it into the project’s approach to testing. This allows the project to make the best use of its test resources and test cases by identifying appropriate testing of the software system.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Specified:</span></strong><span style="color: rgb(0, 0, 0);">A test must be specified prior to its execution. This describes how the test is supposed to be executed and evaluated.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Executed:</span></strong><span style="color: rgb(0, 0, 0);">A test is executed to enable the team to draw conclusions about the software system’s quality.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Evaluated:</span></strong><span style="color: rgb(0, 0, 0);">A test can either pass successfully, or fail, or yield an undetermined result. If a test passes, then the elements (requirements, software etc.) being verified can change state to indicate that they have been verified. If a test fails, then one or more bugs are created to describe the problems encountered. If the result of a test is undetermined, actions may be required to understand and fix what is causing this before the test can be evaluated.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-3" aria-expanded="false" aria-controls="accordion-2 .item-3">Essential qualities</button></h2>
+                                <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-2">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">The test addresses specific requirements.</span><br><span style="color: rgb(0, 0, 0);">The test produces a set of concrete results that can be analyzed and evaluated to determine the test’s outcome.</span><br><span style="color: rgb(0, 0, 0);">The test can be repeated an arbitrary number of times producing the same results on the same execution infrastructure.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-2 .item-4" aria-expanded="false" aria-controls="accordion-2 .item-4">Evaluation methods</button></h2>
+                                <div class="accordion-collapse collapse item-4" role="tabpanel" data-bs-parent="#accordion-2">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">Evaluating the test includes evaluating both the definition of the test as well as the results of the execution of the test. A test must be valuable to the development effort and it must be adequate to verify the targeted requirements and optionally offer diagnostic information during execution.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-3" href="#collapse-3" role="button" style="margin-top: 5px;margin-bottom: 5px;border: 2px solid var(--bs-btn-disabled-color) ;">Test Case</a>
+                    <div class="collapse" id="collapse-3">
+                        <div class="accordion" role="tablist" id="accordion-3">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-3 .item-1" aria-expanded="false" aria-controls="accordion-3 .item-1">Overview</button></h2>
+                                <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-3">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">Test cases:</span><br><span style="color: rgb(0, 0, 0);">Provide the building blocks for designing and implementing tests.</span><br><span style="color: rgb(0, 0, 0);">Provide a mechanism to complete and verify the requirements.</span><br><span style="color: rgb(0, 0, 0);">Allow tests to be specified before implementation starts.</span><br><span style="color: rgb(0, 0, 0);">Provide a way to assess system quality.</span><br><span style="color: rgb(0, 0, 0);">The best test cases describe test scenarios, where a scenario is a complete thread of execution through the system.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-3 .item-2" aria-expanded="false" aria-controls="accordion-3 .item-2">Levels of detail</button></h2>
+                                <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-3">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><strong><span style="color: rgb(234, 117, 2);">Test Ideas Formulated:</span></strong><span style="color: rgb(0, 0, 0);">The lightest level of detail just captures the initial idea that will inform the test case. When defining a test case it needs to be clear what the idea behind the test case is, and which slice of the requirements it applies to. A test case can be considered as a question that you ask of the system. The point of running the test case is to gain information, for example whether the system works as specified or not. There has to be a reason for the creation of the test case. Some test cases exist to address specific project risks, whereas others are based upon experience, hunches, test results or test techniques used to methodically produce test cases. This reasoning can be summarized as the test idea behind the test case, and is the earliest form that a test case can take.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Scenario Chosen:</span></strong><span style="color: rgb(0, 0, 0);">To make the test case executable the scenario to be performed needs to be selected. Once the scenario has been identified the test case is defined enough to support exploratory and investigative testing. This can be very useful early in the project lifecycle when the insight provided by testing the system is invaluable but the specification (and solution) may not be stable enough to support formal, scripted testing.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Variables Set:</span></strong><span style="color: rgb(0, 0, 0);">Once the variables have been identified the test case can be further elaborated to explicitly define specific values for all of the variables involved in the test case.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Scripted or Automated:</span></strong><span style="color: rgb(0, 0, 0);">If a test case is to be used many times or to support many different tests, then it is worth making the effort to fully script or automate it. For a test case to be fully scripted and automatable it must contain no ambiguity. At this level of detail the test case is often documented as an automated testing script, one that can be interpreted and executed by an automated testing tool.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-3 .item-3" aria-expanded="false" aria-controls="accordion-3 .item-3">Essential content</button></h2>
+                                <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-3">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">1..N Pre-conditions: Pre-conditions that specify the state of the system before the test.</span><br><span style="color: rgb(0, 0, 0);">1..N Input: The messages and data to be received at the specific inputs in the scenario. For the early levels of detail this may just be the initial data needed to start the scenario.</span><br><span style="color: rgb(0, 0, 0);">1 Test Scenario: The scenario that the test case will exercise.</span><br><span style="color: rgb(0, 0, 0);">1..N Observations (with Expected Results): The observations to be taken as the test case is performed including the expected result. This includes describing any desired system post-conditions, and how the expected results will be verified.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-3 .item-4" aria-expanded="false" aria-controls="accordion-3 .item-4">Essential qualities</button></h2>
+                                <div class="accordion-collapse collapse item-4" role="tabpanel" data-bs-parent="#accordion-3">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">The pre-conditions must be sufficient to enable the test to be performed.</span><br><span style="color: rgb(0, 0, 0);">The test case defines a complete scenario.</span><br><span style="color: rgb(0, 0, 0);">The input matches the scenario.</span><br><span style="color: rgb(0, 0, 0);">The expected results are adequate and verifiable.</span><br><span style="color: rgb(0, 0, 0);">The test case reflects at least one requirement on the system.</span><br><span style="color: rgb(0, 0, 0);">The scenario and the underlying requirements to be tested are clearly defined.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-8" href="#collapse-8" role="button" style="margin-top: 5px;margin-bottom: 5px;border: 2px solid var(--bs-btn-disabled-color) ;">Test Results</a>
+                    <div class="collapse" id="collapse-8">
+                        <div class="accordion" role="tablist" id="accordion-4">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-1" aria-expanded="false" aria-controls="accordion-4 .item-1">Overview</button></h2>
+                                <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-4">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">Test results:</span><br><span style="color: rgb(0, 0, 0);">Provide objective evidence of the quality of the system produced.</span><br><span style="color: rgb(0, 0, 0);">Allow defects to be identified.</span><br><span style="color: rgb(0, 0, 0);">Provide verification that the system behaves as required.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-2" aria-expanded="false" aria-controls="accordion-4 .item-2">Levels of detail</button></h2>
+                                <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-4">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><strong><span style="color: rgb(234, 117, 2);">Generated:</span></strong><span style="color: rgb(0, 0, 0);">As tests are executed, they generate data that is collected for analysis and evaluation.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Analyzed:</span></strong><span style="color: rgb(0, 0, 0);">Test results are analyzed to determine whether the test was successful or not.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Evaluated:</span></strong><span style="color: rgb(0, 0, 0);">Individual tests are part of a broader effort to evaluate the software system under construction.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-3" aria-expanded="false" aria-controls="accordion-4 .item-3">Essential content</button></h2>
+                                <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-4">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">1 Test Instance Description: A description of the particulars of the test execution including the software build it was run against, the date and time it was executed and any other relevant information.</span><br><span style="color: rgb(0, 0, 0);">1..N Results of Tests: The results of the test, including the test data and a description of whether the test executed successfully or not. If the test failed, this provides a reference to the bugs created.</span><br><span style="color: rgb(0, 0, 0);">1 Test Evaluation: An evaluation of the test results in the context of the overall test objectives of the current work cycle.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-4 .item-4" aria-expanded="false" aria-controls="accordion-4 .item-4">Essential qualities</button></h2>
+                                <div class="accordion-collapse collapse item-4" role="tabpanel" data-bs-parent="#accordion-4">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">The results of the test are clearly stated as passed, failed or undetermined.</span><br><span style="color: rgb(0, 0, 0);">The date and time that the test was executed are recorded.</span><br><span style="color: rgb(0, 0, 0);">The circumstances (test environment, build etc.) under which the test was executed are recorded.</span><br><span style="color: rgb(0, 0, 0);">The data generated by the test has been recorded in the appropriate format.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-7" href="#collapse-7" role="button" style="margin-top: 4px;margin-bottom: 4px;border: 2px solid var(--bs-btn-disabled-color) ;">Test Specification</a>
+                    <div class="collapse" id="collapse-7">
+                        <div class="accordion" role="tablist" id="accordion-5">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-5 .item-1" aria-expanded="false" aria-controls="accordion-5 .item-1">Overview</button></h2>
+                                <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-5">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">A test specification:</span><br><span style="color: rgb(0, 0, 0);">Defines the objectives and success criteria for a test.</span><br><span style="color: rgb(0, 0, 0);">Describes how to execute a set of test cases to verify a software system.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-5 .item-2" aria-expanded="false" aria-controls="accordion-5 .item-2">Levels of detail</button></h2>
+                                <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-5">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><strong><span style="color: rgb(234, 117, 2);">Objectives Defined:</span></strong><span style="color: rgb(0, 0, 0);">Each test has a specific set of test objectives that clearly define the goals of the test. If a test does not have a clear set of test objectives it is unlikely to be effective.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Approach Identified:</span></strong><span style="color: rgb(0, 0, 0);">There are many different approaches that can be adopted when testing a system. At one end of the scale you have exploratory testing where, given a clearly defined test objective, the tester can improvise and create the appropriate test cases on the fly. At the other end of the scale you have rigorously scripted tests where the tester has to follow the pre-scribed instructions to the letter. And there are many variations in between these two extremes.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Test Cases Identified:</span></strong><span style="color: rgb(0, 0, 0);">Generally the test objectives are achieved by executing one or more test cases. If the test is to be repeatable then the test cases need to be specifically identified.</span><br><br><strong><span style="color: rgb(234, 117, 2);">Orchestrated:</span></strong><span style="color: rgb(0, 0, 0);">Tests can become very large and very complicated. For example, a complete system test can involve running all the previously defined test cases, or a business test may involve executing a large number of test cases in a particular sequence or with particular timing.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-5 .item-3" aria-expanded="false" aria-controls="accordion-5 .item-3">Essential content</button></h2>
+                                <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-5">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">1..N Test Objectives: A clear statement of the objectives of the test. These objectives should refer to the specific requirements that are being addressed by the test and also explain to what degree those requirements need to be fulfilled to meet each objective.</span><br><span style="color: rgb(0, 0, 0);">1..N Evaluation Criteria: Details of how the test results will be evaluated and the test coverage required.</span><br><span style="color: rgb(0, 0, 0);">1 Test Environment Description: A description or illustration of the hardware and software environment in which to perform the test.</span><br><span style="color: rgb(0, 0, 0);">1..N Test Instructions: A description of the procedures to be followed to execute the set of test cases. This may take the form of an automated test suite when orchestrating a set of automated test cases.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-5 .item-4" aria-expanded="false" aria-controls="accordion-5 .item-4">Essential qualities</button></h2>
+                                <div class="accordion-collapse collapse item-4" role="tabpanel" data-bs-parent="#accordion-5">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">The objective clearly states the purpose of the test.</span><br><span style="color: rgb(0, 0, 0);">The evaluation criteria unambiguously define the criteria for a successful test execution.</span><br><span style="color: rgb(0, 0, 0);">The test specification describes the test procedures and environment in enough detail that the test can be executed multiple times, producing predictable results.</span><br><span style="color: rgb(0, 0, 0);">The test specification describes the data that is collected as part of the test execution, including how it is collected and stored.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-6" href="#collapse-6" role="button" style="margin-top: 4px;margin-bottom: 4px;border: 2px solid var(--bs-btn-disabled-color) ;">Identify Test</a>
+                    <div class="collapse" id="collapse-6">
+                        <div class="accordion" role="tablist" id="accordion-6">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-6 .item-1" aria-expanded="false" aria-controls="accordion-6 .item-1">Overview</button></h2>
+                                <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-6">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">This activity results in a set of test specifications that define the tests to be run and the test approach to be adopted.</span><br><span style="color: rgb(0, 0, 0);">This activity is repeated many times during the lifecycle of a project. The most critical tests are identified early in the lifecycle to focus the team towards verifying the most important decisions made for the software system. Additional test objectives may need to be added to verify any changing requirements or improve the testing process.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-6 .item-2" aria-expanded="false" aria-controls="accordion-6 .item-2">Completion criteria</button></h2>
+                                <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-6">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><strong><span style="color: rgb(0, 0, 0);">Test Defined</span></strong><br><span style="color: rgb(0, 0, 0);">At the conclusion of this activity, one or more tests have been specified and their objectives defined in the test specification. This includes progressing to the following alpha states:</span><br><strong><span style="color: rgb(0, 0, 0);">Requirements </span></strong><span style="color: rgb(0, 0, 0);">to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/364c47be-d8bf-450c-9358-d6e195cd33c5/Requirements_gd.html#acceptable"><strong><span style="color: rgb(0, 0, 0);">Acceptable</span></strong></a><strong><span style="color: rgb(0, 0, 0);">&nbsp;</span></strong><span style="color: rgb(0, 0, 0);">(contributes to)</span><br><strong><span style="color: rgb(0, 0, 0);">Software System</span></strong><span style="color: rgb(0, 0, 0);"> to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#architecture_selected"><strong><span style="color: rgb(0, 0, 0);">Architecture Selected</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#demonstrable"><strong><span style="color: rgb(0, 0, 0);">Demonstrable</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#ready"><strong><span style="color: rgb(0, 0, 0);">Ready</span></strong></a><strong><span style="color: rgb(0, 0, 0);">&nbsp;</span></strong><span style="color: rgb(0, 0, 0);">(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#usable"><strong><span style="color: rgb(0, 0, 0);">Usable</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)</span><br><strong><span style="color: rgb(0, 0, 0);">Test</span></strong><span style="color: rgb(0, 0, 0);"> to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/378d6bad-ba6b-4104-9ebf-3e86e85ace53/Test_gd.html#defined"><strong><span style="color: rgb(0, 0, 0);">Defined</span></strong></a><br><br><span style="color: rgb(0, 0, 0);">This also includes producing the following work product levels of detail:</span><br><strong><span style="color: rgb(0, 0, 0);">Test Specification</span></strong><span style="color: rgb(0, 0, 0);"> to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/0ca818bc-e59e-45f7-8410-8b4f41cc2f3c/Test%20Specification_gd.html#objectives_defined"><strong><span style="color: rgb(0, 0, 0);">Objectives Defined</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;or beyond</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-6 .item-3" aria-expanded="false" aria-controls="accordion-6 .item-3">Participants</button></h2>
+                                <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-6">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">This activity needs to be a group activity involving a number of complementary competencies to define a sensible set of tests for the project.</span><br><span style="color: rgb(0, 0, 0);">The identification of the tests will be led by someone with the Testing competency. Additional assistance will be required from people with the Leadership and Development competencies.</span><br><br><strong><span style="color: rgb(0, 0, 0);">Testing</span></strong><br><span style="color: rgb(0, 0, 0);">The individual accountable for this activity has&nbsp;to:</span><br><span style="color: rgb(0, 0, 0);">Shape the testing objectives and procedures.</span><br><span style="color: rgb(0, 0, 0);">Document the test specification.</span><br><span style="color: rgb(0, 0, 0);">Ensure coverage of the appropriate test cases.</span><br><br><strong><span style="color: rgb(0, 0, 0);">Leadership</span></strong><br><span style="color: rgb(0, 0, 0);">Test objectives are created to verify the achievement of a project milestone and must be achievable within the time and budget constraints of the project. A team member with Leadership competency must participate in test identification to ensure that the completion of the identified tests is possible within the project constraints.</span><br><br><strong><span style="color: rgb(0, 0, 0);">Development</span></strong><br><span style="color: rgb(0, 0, 0);">Development knowledge is also required to define the right test objectives based on the technical solution approach and identified areas of technical risk.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-5" href="#collapse-5" role="button" style="margin-top: 4px;margin-bottom: 4px;border: 2px solid var(--bs-btn-disabled-color) ;">Build Test</a>
+                    <div class="collapse" id="collapse-5">
+                        <div class="accordion" role="tablist" id="accordion-7">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-7 .item-1" aria-expanded="false" aria-controls="accordion-7 .item-1">Overview</button></h2>
+                                <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-7">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">Build a test to:</span><br><span style="color: rgb(0, 0, 0);">Align with the test objectives.</span><br><span style="color: rgb(0, 0, 0);">Create the necessary test procedures and instructions.</span><br><span style="color: rgb(0, 0, 0);">Define how the outcomes of the test are evaluated to determine the test results.</span><br><span style="color: rgb(0, 0, 0);">Automate its execution.</span><br><br><span style="color: rgb(0, 0, 0);">This activity results in a test specification that specifies a test based on one or more test cases.</span><br><span style="color: rgb(0, 0, 0);">This activity is repeated multiple times during the lifecycle of a project. Tests for the most critical scenarios and non-functional requirements are specified early in the lifecycle to focus the team on verifying the most important decisions made for the system. These test specifications will need to be kept up to date as the project progresses, bugs are found and the requirements change.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-7 .item-2" aria-expanded="false" aria-controls="accordion-7 .item-2">Completion criteria</button></h2>
+                                <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-7">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><strong><span style="color: rgb(0, 0, 0);">Test Specified</span></strong><br><br><span style="color: rgb(0, 0, 0);">At the conclusion of this activity, the test specification has been developed to specify the test by identifying the test cases that the test incorporates. This includes progressing to the following alpha states:</span><br><strong><span style="color: rgb(0, 0, 0);">Software System</span></strong><span style="color: rgb(0, 0, 0);"> to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#demonstrable"><strong><span style="color: rgb(0, 0, 0);">Demonstrable</span></strong></a><strong><span style="color: rgb(0, 0, 0);">&nbsp;</span></strong><span style="color: rgb(0, 0, 0);">(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#usable"><strong><span style="color: rgb(0, 0, 0);">Usable</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#ready"><strong><span style="color: rgb(0, 0, 0);">Ready</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)</span><br><strong><span style="color: rgb(0, 0, 0);">Test</span></strong><span style="color: rgb(0, 0, 0);">&nbsp;to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/378d6bad-ba6b-4104-9ebf-3e86e85ace53/Test_gd.html#specified"><strong><span style="color: rgb(0, 0, 0);">Specified</span></strong></a><br><strong><span style="color: rgb(0, 0, 0);">Bug</span></strong><span style="color: rgb(0, 0, 0);"> to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/b69fe5b1-a70d-404e-a28d-f12471a31f53/Bug_gd.html#fixed"><strong><span style="color: rgb(0, 0, 0);">Fixed</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(optional)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/b69fe5b1-a70d-404e-a28d-f12471a31f53/Bug_gd.html#closed"><strong><span style="color: rgb(0, 0, 0);">Closed</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(optional)</span><br><br><span style="color: rgb(0, 0, 0);">This also includes producing the following work product levels of detail:</span><br><strong><span style="color: rgb(0, 0, 0);">Test Specification</span></strong><span style="color: rgb(0, 0, 0);"> to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/0ca818bc-e59e-45f7-8410-8b4f41cc2f3c/Test%20Specification_gd.html#approach_identified"><strong><span style="color: rgb(0, 0, 0);">Approach Identified</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;or beyond</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-7 .item-3" aria-expanded="false" aria-controls="accordion-7 .item-3">Participants</button></h2>
+                                <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-7">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">The activity will be led by someone with the Tester competency.</span><br><span style="color: rgb(0, 0, 0);">Additional assistance may be required from people with the Developer competency.</span><br><br><strong><span style="color: rgb(0, 0, 0);">Testing</span></strong><br><span style="color: rgb(0, 0, 0);">The individual accountable for this activity has&nbsp;to:</span><br><span style="color: rgb(0, 0, 0);">Document the test specification.</span><br><span style="color: rgb(0, 0, 0);">Ensure the selection of appropriate test cases.</span><br><br><strong><span style="color: rgb(0, 0, 0);">Development</span></strong><br><span style="color: rgb(0, 0, 0);">Where automated or programmatic testing methods are adopted, individuals&nbsp;will be needed to set up, maintain and develop the automated tests.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div><a class="btn btn-warning" data-bs-toggle="collapse" aria-expanded="false" aria-controls="collapse-4" href="#collapse-4" role="button" style="margin-top: 4px;margin-bottom: 4px;border: 2px solid var(--bs-btn-disabled-color) ;">Execute Test</a>
+                    <div class="collapse" id="collapse-4">
+                        <div class="accordion" role="tablist" id="accordion-8">
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-8 .item-1" aria-expanded="false" aria-controls="accordion-8 .item-1">Overview</button></h2>
+                                <div class="accordion-collapse collapse item-1" role="tabpanel" data-bs-parent="#accordion-8">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">Execute a test to:</span><br><span style="color: rgb(0, 0, 0);">Verify that the software system meets the evaluation criteria of the test.</span><br><span style="color: rgb(0, 0, 0);">Identify bugs in the software system.</span><br><br><span style="color: rgb(0, 0, 0);">This activity results in the test being executed and evaluated, and its test results being generated and analyzed. If the test fails, one or more bugs are identified and handled by the project as appropriate.</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-8 .item-2" aria-expanded="false" aria-controls="accordion-8 .item-2">Completion criteria</button></h2>
+                                <div class="accordion-collapse collapse item-2" role="tabpanel" data-bs-parent="#accordion-8">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><strong><span style="color: rgb(0, 0, 0);">Test Evaluated</span></strong><br><br><span style="color: rgb(0, 0, 0);">At the conclusion of a test, the results of the test have been analyzed and evaluated. This includes progressing to the following alpha states:</span><br><strong><span style="color: rgb(0, 0, 0);">Requirements&nbsp;</span></strong><span style="color: rgb(0, 0, 0);">to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/364c47be-d8bf-450c-9358-d6e195cd33c5/Requirements_gd.html#addressed"><strong><span style="color: rgb(0, 0, 0);">Addressed</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/364c47be-d8bf-450c-9358-d6e195cd33c5/Requirements_gd.html#fulfilled"><strong><span style="color: rgb(0, 0, 0);">Fulfilled</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)</span><br><strong><span style="color: rgb(0, 0, 0);">Software System</span></strong><span style="color: rgb(0, 0, 0);"> to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#demonstrable"><strong><span style="color: rgb(0, 0, 0);">Demonstrable</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#usable"><strong><span style="color: rgb(0, 0, 0);">Usable</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#ready"><strong><span style="color: rgb(0, 0, 0);">Ready</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/35c65d4a-7214-448c-8249-706bc477e665/Software%20System_gd.html#operational"><strong><span style="color: rgb(0, 0, 0);">Operational</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(contributes to)</span><br><strong><span style="color: rgb(0, 0, 0);">Test</span><span style="color: rgb(75, 110, 198);">&nbsp;</span></strong><span style="color: rgb(0, 0, 0);">to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/378d6bad-ba6b-4104-9ebf-3e86e85ace53/Test_gd.html#executed"><strong><span style="color: rgb(0, 0, 0);">Executed</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/378d6bad-ba6b-4104-9ebf-3e86e85ace53/Test_gd.html#evaluated"><strong><span style="color: rgb(0, 0, 0);">Evaluated</span></strong></a><br><strong><span style="color: rgb(0, 0, 0);">Bug</span></strong><span style="color: rgb(0, 0, 0);">&nbsp;to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/b69fe5b1-a70d-404e-a28d-f12471a31f53/Bug_gd.html#detected"><strong><span style="color: rgb(0, 0, 0);">Detected</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(optional: Bugs have been identified as a result of test failure) and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/b69fe5b1-a70d-404e-a28d-f12471a31f53/Bug_gd.html#fixed"><strong><span style="color: rgb(0, 0, 0);">Fixed</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;and&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/b69fe5b1-a70d-404e-a28d-f12471a31f53/Bug_gd.html#closed"><strong><span style="color: rgb(0, 0, 0);">Closed</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;(optional)</span><br><br><span style="color: rgb(0, 0, 0);">This also includes producing the following work product levels of detail:</span><br><strong><span style="color: rgb(0, 0, 0);">Test Results</span></strong><span style="color: rgb(0, 0, 0);">&nbsp;to&nbsp;</span><a href="https://practicelibrary.ivarjacobson.com/sites/default/files/embedded-practices/Test_Execution_Essentials_HTML_guidelines/html/4bf1e18f-e6cd-4983-b8a1-3f33d129baf1/Test%20Results_gd.html#analyzed"><strong><span style="color: rgb(0, 0, 0);">Analyzed</span></strong></a><span style="color: rgb(0, 0, 0);">&nbsp;or beyond</span><br><br></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item">
+                                <h2 class="accordion-header" role="tab"><button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accordion-8 .item-3" aria-expanded="false" aria-controls="accordion-8 .item-3">Participants</button></h2>
+                                <div class="accordion-collapse collapse item-3" role="tabpanel" data-bs-parent="#accordion-8">
+                                    <div class="accordion-body">
+                                        <p class="mb-0"><span style="color: rgb(0, 0, 0);">Executing tests should not be seen as purely the domain of specialist test resources, everybody involved in the project should be able to achieve the Testing competency&nbsp;and contribute to the testing of the system.</span><br><br><strong><span style="color: rgb(0, 0, 0);">Testing</span></strong><br><span style="color: rgb(0, 0, 0);">The individual accountable for this activity has&nbsp;to:</span><br><span style="color: rgb(0, 0, 0);">Execute the test.</span><br><span style="color: rgb(0, 0, 0);">Gather and store the test outputs.</span><br><span style="color: rgb(0, 0, 0);">Provide an objective evaluation of the test results.</span><br><span style="color: rgb(0, 0, 0);">Raise bugs as appropriate.</span><br><span style="color: rgb(0, 0, 0);">Operate specialized testing software and/or equipment.</span><br><br><strong><span style="color: rgb(0, 0, 0);">Development</span></strong><br><span style="color: rgb(0, 0, 0);">Often a certain level of Development competency will be required to support the analysis of the test results and the correct identification of defects.</span><br><span style="color: rgb(0, 0, 0);">The level of developer competency required is dependent on the type of test being executed, the complexity of the system under test and the type of defect discovered.&nbsp;</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src={% static 'script/practice.js' %}></script>
+</body>
+
+</html>

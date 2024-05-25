@@ -1,0 +1,226 @@
+{% load static %}
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>MainPage</title>
+    <link rel="stylesheet" href={% static 'styles/bootstrap.css' %}>
+    <link rel="stylesheet" href={% static 'styles/bootstrap.min.css' %}>
+{#    <link rel="stylesheet" href={% static 'styles/home.css' %}>#}
+    <style>
+        .list-group-item{
+            min-height: 50px;
+        }
+    </style>
+</head>
+
+<body class="d-flex flex-column" style="background: var(--bs-yellow);">
+    <nav class="d-flex flex-row justify-content-xxl-end align-items-xxl-center" style="background: #ff9d00;border-width: 2px;border-style: solid;">
+        <h1 style="padding-left: 0px;padding-right: 0px;margin-left: 56px;margin-right: 56px;"><a href="http://127.0.0.1:8000/myapp/home/{{ project.id }}/{{ user.id }}">TestingSimplified</a></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col d-xxl-flex justify-content-xxl-end align-items-xxl-center"><a href="http://127.0.0.1:8000/myapp/practice/{{ user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-left: 6px;margin-right: 6px;">Essence Practice Explanation</button></a><a href="http://127.0.0.1:8000/myapp/activityflow/{{ user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-left: 6px;margin-right: 6px;">Activity Flow</button></a><a href="http://127.0.0.1:8000/myapp/profile/{{ user.id }}/{{ user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">User Profile</button></a></div>
+            </div>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-xxl-4 offset-xxl-0" style="border: 2px solid var(--bs-emphasis-color) ;height: 960px;">
+                <div class="row">
+                    <div class="col-xxl-12 d-flex d-xxl-flex justify-content-end align-items-center flex-wrap align-items-sm-center justify-content-xxl-end align-items-xxl-center" style="padding-bottom: 10px;padding-top: 10px;">
+                        <form action="{% url 'home' project.pk user.id %}" method="get">
+                            {%csrf_token%}
+                            <input class="form-control-lg" type="search" placeholder="Search project by title.." name="search">
+                            <button class="btn btn-warning btn-lg justify-content-xxl-end" type="submit" style="border: 2px solid var(--bs-btn-disabled-color) ;">Search</button></form>
+                    </div>
+                    <div class="col-xxl-12" style="padding-top: 10px;padding-bottom: 10px;">
+                        <ul class="list-group" style="max-height: 720px; overflow: scroll; -webkit-overflow-scrolling: touch;">
+                            {%  for project in projects %}
+                                <a href="http://127.0.0.1:8000/myapp/home/{{ project.pk }}/{{ user.id }}" class="list-group-item"><span>{{ project.title }}</span></a>
+                            {% endfor %}
+                            {% for i in range %}
+                                 <li class="list-group-item"><span> </span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+{#                    <div class="col d-flex flex-column" style="padding-top: 10px;padding-bottom: 10px;border-style: solid;"><button class="btn btn-warning" type="button" style="margin-top: 10px;margin-bottom: 10px;border: 2px solid var(--bs-btn-disabled-color) ;">LogOut</button></div>#}
+                    <form action="{% url 'home' project.id user.id %}" method="post" name="logout">
+                    <div class="col d-flex flex-column" style="padding-top: 10px;padding-bottom: 10px;">
+                            {%csrf_token%}
+                        <button class="btn btn-warning" type="button" data-bs-toggle="modal" data-bs-target="#modal-project" style="margin-top: 10px;margin-bottom: 10px;border-width: 2px;border-color: var(--bs-btn-disabled-color);">New Project</button>
+                        <button class="btn btn-warning" type="submit" style="margin-top: 10px;margin-bottom: 10px;border: 2px solid var(--bs-btn-disabled-color) ;" name="save" value="logout">LogOut</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4 col-xxl-8" style="border: 2px solid var(--bs-emphasis-color) ; height: 960px; overflow: scroll">
+                <div class="row">
+                    <div class="col d-xxl-flex align-items-xxl-center">
+                        <h2>{{ project.title }}</h2>
+                    </div>
+                    <div class="col d-xxl-flex justify-content-xxl-end align-items-xxl-center">
+                        {% if user2project == None %}
+                        <form action="{% url 'home' project.pk user.id%}" method="post" name="assignProject">
+                            {%csrf_token%}
+                            <button class="btn btn-warning btn-lg" type="submit" value="assignProject" name="save" style="margin-left: 10px;margin-right: 10px;border: 2px solid var(--bs-btn-disabled-color) ;">Enroll</button>
+                        </form>
+                        {% else %}
+                            <form action="{% url 'home' project.pk user.id%}" method="post" name="abandonProject">
+                                {%csrf_token%}
+                                <button class="btn btn-warning btn-lg" type="submit" value="abandonProject" name="save" style="margin-left: 10px;margin-right: 10px;border: 2px solid var(--bs-btn-disabled-color) ;">Abandon</button>
+                            </form>
+                            <button class="btn btn-warning btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#modal-edit-project" style="margin-left: 10px;margin-right: 10px;border: 2px solid var(--bs-btn-disabled-color) ;">Edit</button>
+                        {% endif %}
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+
+                    {% if project.description != None and project.description != 'Project description - optional' and project.description != ''%}
+                        <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h5>Project Description</h5>
+                        <p>{{ project.description }}</p>
+                        </div>
+
+                        <hr>
+                    {% endif %}
+
+                    <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h5>Test List</h5>
+                        <div class="list-group" style="max-height: 300px; overflow: scroll; -webkit-overflow-scrolling: touch;">
+                            {% for test in tests %}
+                                <button class="list-group-item list-group-item-action" data-bs-toggle="tooltip" title="{{ test.description }}"><a href="http://127.0.0.1:8000/myapp/test/{{ test.id }}/{{ user.id }}/">{{ test.title }}</a></button>
+                            {% endfor %}
+                        </div>
+                        {% if user2project is not None %}
+                            <a class="btn btn-warning d-xxl-flex justify-content-xxl-center" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-test" href="#modal-test" role="button" style="margin-left: 5px;margin-right: 5px;border: 2px solid var(--bs-btn-disabled-color) ;">Add test</a>
+                        {% endif %}
+                    </div>
+
+                    <hr>
+
+                    <div class="col-xxl-12" style="margin-top: 15px;margin-bottom: 15px;">
+                        <h5>Bug List</h5>
+                        <div class="list-group" style="max-height: 300px; overflow: scroll; -webkit-overflow-scrolling: touch;">
+                            {% for bug in bugs %}
+                                <button class="list-group-item list-group-item-action" data-bs-toggle="tooltip" title="{{ bug.description }}"><a href="http://127.0.0.1:8000/myapp/bug/{{ bug.id }}/{{ user.id }}/">{{ bug.title }}</a></button>
+                            {% endfor %}
+                        </div>
+                    {% if user2project is not None %}
+                        <a class="btn btn-warning d-xxl-flex justify-content-xxl-center" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-bug" href="#modal-bug" role="button" style="margin-left: 5px;margin-right: 5px;border: 2px solid var(--bs-btn-disabled-color) ;">Add bug</a>
+                    {% endif %}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-test">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add test</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'home' project.id user.id %}" method="post" name="newTest">
+                        {%csrf_token%}
+                    <p>Test Title</p><textarea name="t_title"></textarea>
+                    <p>Test Prerequisites</p><textarea name="t_preq"></textarea>
+                    <p>Test Priority</p>
+                        <label for="t_prio">Select priority level:</label>
+                        <select name="t_prio" id="t_prio">
+                            <option value="MINOR">MINOR</option>
+                            <option value="MAJOR">MAJOR</option>
+                            <option value="CRITICAL">CRITICAL</option>
+                        </select>
+                    <p>Test Description</p><textarea name="t_desc"></textarea>
+                    <p>Test Steps</p><textarea name="t_steps"></textarea>
+                    <p>Test Results</p><textarea name="t_results"></textarea>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" value="newTest" name="save">Save</button></div>
+            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-bug">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit test</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                   <form action="{% url 'home' project.id user.id %}" method="post" name="newBug">
+                        {%csrf_token%}
+                    <p>Bug Title</p><textarea name="b_title"></textarea>
+                    <p>Bug Priority</p>
+                        <label for="b_prio">Select priority level:</label>
+                        <select name="b_prio" id="b_prio">
+                            <option value="MINOR">MINOR</option>
+                            <option value="MAJOR">MAJOR</option>
+                            <option value="CRITICAL">CRITICAL</option>
+                        </select>
+                    <p>Bug Description</p><textarea name="b_desc"></textarea>
+                    <p>Bug Steps</p><textarea name="b_steps"></textarea>
+                    <p>Bug Impact</p>
+                       <label for="b_impact">Select impact level:</label>
+                       <select name="b_impact" id="b_impact">
+                            <option value="LOW">LOW</option>
+                            <option value="HIGH">HIGH</option>
+                        </select>
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" value="newBug" name="save">Save</button></div>
+            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-project">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit test</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                     <form action="{% url 'home' project.id user.id %}" method="post" name="newPrj">
+                        {%csrf_token%}
+                    <p>Project Title</p><textarea name="p_title"></textarea>
+
+                    <p>Project Description(optional)</p><textarea name="p_desc"></textarea>
+
+                         <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" value="newPrj" name="save">Save</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-edit-project">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit test</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                     <form action="{% url 'home' project.id user.id %}" method="post" name="editPrj">
+                        {%csrf_token%}
+                    <p>Project Title</p><textarea name="p_title">{{ project.title }}</textarea>
+
+                    <p>Project Description(optional)</p><textarea name="p_desc">{{ project.description }}</textarea>
+
+                         <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" value="editPrj" name="save">Save</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src={% static 'script/bug.js' %}></script>
+</body>
+
+</html>

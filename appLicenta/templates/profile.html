@@ -1,0 +1,184 @@
+{% load static %}
+<!DOCTYPE html>
+<html data-bs-theme="light" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>UserProfile</title>
+{#    <link rel="stylesheet" href={% static 'styles/profile.css' %}>#}
+    <link rel="stylesheet" href={% static 'styles/bootstrap.css' %}>
+    <link rel="stylesheet" href={% static 'styles/bootstrap.min.css' %}>
+    <style>
+        .list-group-item{
+            min-height: 50px;
+        }
+    </style>
+</head>
+
+<body style="background: var(--bs-yellow);">
+    <nav class="d-flex flex-row justify-content-xxl-end align-items-xxl-center" style="background: #ff9d00;border-width: 2px;border-style: solid;">
+        <h1 style="padding-left: 0px;padding-right: 0px;margin-left: 56px;margin-right: 56px;"><a href="http://127.0.0.1:8000/myapp/home/{{ project.id }}/{{ connected_user.id }}">TestingSimplified</a></h1>
+        <div class="container">
+            <div class="row">
+                <div class="col d-xxl-flex justify-content-xxl-end align-items-xxl-center"><a href="http://127.0.0.1:8000/myapp/practice/{{ connected_user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-left: 6px;margin-right: 6px;">Essence Practice Explanation</button></a><a href="http://127.0.0.1:8000/myapp/activityflow/{{ connected_user.id }}/"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color);margin-left: 6px;margin-right: 6px;">Activity Flow</button></a><a href="http://127.0.0.1:8000/myapp/profile/{{ connected_user.id }}/{{ connected_user.id }}"><button class="btn btn-warning btn-lg active d-xxl-flex" type="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">User Profile</button></a></div>
+            </div>
+        </div>
+    </nav>
+    <div class="container" style="margin-top: 10px;margin-bottom: 10px;">
+        <div class="row">
+            <div class="col-md-8 col-xxl-4 offset-xxl-0 d-flex" style="border: 2px solid var(--bs-emphasis-color) ;height: 900px;">
+                <div class="row d-flex">
+                    <div class="col-xxl-12 d-flex d-xxl-flex justify-content-end align-items-center flex-wrap align-items-sm-center justify-content-xxl-end align-items-xxl-center" style="padding-top: 10px;padding-bottom: 10px;">
+                        <form action="{% url 'profile' user.id connected_user.id %}" method="get">
+                            {%csrf_token%}
+                            <input class="form-control-lg" type="search" placeholder="Search project by title.." name="search">
+                            <button class="btn btn-warning btn-lg justify-content-xxl-end" type="submit" style="border: 2px solid var(--bs-btn-disabled-color) ;">Search</button></form>
+                    </div>
+                    <div class="col-xxl-12" style="padding-top: 10px;padding-bottom: 10px;">
+                        <ul class="list-group" style="max-height: 720px; overflow: scroll; -webkit-overflow-scrolling: touch;">
+                            {%  for project in projects %}
+                                <a href="http://127.0.0.1:8000/myapp/home/{{ project.pk }}/{{ connected_user.id }}" class="list-group-item"><span>{{ project.title }}</span></a>
+                            {% endfor %}
+                            {% for i in range %}
+                                 <li class="list-group-item"><span> </span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <form action="{% url 'profile' user.id connected_user.id %}" method="post" name="logout">
+                    <div class="col d-flex flex-column" style="padding-top: 10px;padding-bottom: 10px;">
+
+                            {%csrf_token%}
+                        <button class="btn btn-warning" type="submit" style="margin-top: 10px;margin-bottom: 10px;border: 2px solid var(--bs-btn-disabled-color) ;" name="save" value="logout">LogOut</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col" style="border: 2px solid var(--bs-emphasis-color) ; height: 900px; overflow: scroll">
+                <div class="row">
+                    <div class="col-xxl-5 d-xxl-flex justify-content-xxl-start align-items-xxl-center">
+                        <img src="{% static 'media/' %}{{ user.image }}" width="100" height="100" alt="failed" style="padding-top: 10px;">
+                        <h3 class="text-start" style="margin-left: 20px;margin-right: 20px;">{{ user.username }}</h3>
+                    </div>
+                    {% if connected_user.id == user.id %}
+                        <div class="col d-xxl-flex justify-content-xxl-end align-items-xxl-center">
+                            <a class="btn btn-warning d-xxl-flex justify-content-xxl-center btn-lg" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-profile" href="#modal-profile" role="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">Edit profile</a>
+                        </div>
+                    {% endif %}
+                </div>
+                <div class="row">
+                    <div class="col-xxl-12 d-flex flex-column" style="margin-top: 15px;margin-bottom: 15px;border: 2px solid var(--bs-emphasis-color) ;">
+                        <h3>Project List</h3>
+                        <ul class="list-group" style="margin-bottom: 15px;">
+                            {% if userProjectList is not None %}
+                                {% for p in userProjectList %}
+                                    <a href="http://127.0.0.1:8000/myapp/home/{{ p.pk }}/{{ connected_user.id }}" class="list-group-item"><span>{{ p.title }}</span></a>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+
+                    </div>
+                    <div class="col-xxl-12 d-flex flex-column" style="margin-top: 15px;margin-bottom: 15px;border: 2px solid var(--bs-emphasis-color) ;">
+                        <h3>Test List</h3>
+                        <ul class="list-group" style="margin-bottom: 15px;">
+                            {% if userTestList is not None %}
+                                {% for t in userTestList %}
+                                    <a href="http://127.0.0.1:8000/myapp/test/{{ t.pk }}/{{ connected_user.id }}" class="list-group-item"><span>{{ t.title }}</span></a>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                    <div class="col d-flex flex-column" style="margin-top: 15px;margin-bottom: 15px;border: 2px solid var(--bs-emphasis-color) ;">
+                        <h3>Bug List</h3>
+                        <ul class="list-group" style="margin-bottom: 15px;">
+                            {% if userBugList is not None %}
+                                {% for b in userBugList %}
+                                    <a href="http://127.0.0.1:8000/myapp/bug/{{ b.pk }}/{{ connected_user.id }}" class="list-group-item"><span>{{ b.title }}</span></a>
+                                {% endfor %}
+                            {% endif %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-profile">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Edit Profile</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'profile' user.id connected_user.id %}" method="post" name="editProfile">
+                        {%csrf_token%}
+                        <p>Username</p><input type="text" name="u_username" placeholder="Your new username" value="{{ connected_user.username }}">
+
+                        <br>
+
+                        <p>Change profile picture</p>
+                        <a class="btn btn-primary" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-pfp" href="#modal-pfp" role="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">Change profile picture</a>
+
+
+                        <br>
+
+                        <p>Change your password...</p>
+                        <a class="btn btn-primary" data-bs-toggle="modal" aria-expanded="false" aria-controls="modal-passw" href="#modal-passw" role="button" style="border: 2px solid var(--bs-btn-disabled-color) ;">Change password</a>
+
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" value="editProfile" name="save">Save</button></div>
+            </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-passw">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Change Password</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'profile' user.id connected_user.id %}" method="post" name="changePass">
+                        {%csrf_token%}
+                        <p>Your old password</p><input type="password" name="oldpass" placeholder="Your old pwd here...">
+
+                        <br>
+
+                        <p>Your new password</p><input type="password" name="newpass" placeholder="Your new pwd here...">
+
+                        <br>
+
+                        <p>Repeat your new password</p><input type="password" name="repeatpass" placeholder="Repeat your new pwd...">
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" value="changePass" name="save">Save</button></div>
+            </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" role="dialog" tabindex="-1" id="modal-pfp">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Change Profile Picture</h4><button class="btn-close" type="button" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{% url 'profile' user.id connected_user.id %}" method="post" enctype="multipart/form-data" name="changePfp">
+                        {%csrf_token%}
+                        <p>Choose new profile picture</p>
+                        {{ imgform.as_p }}
+                <div class="modal-footer"><button class="btn btn-light" type="button" data-bs-dismiss="modal">Close</button><button class="btn btn-primary" type="submit" value="changePfp" name="save">Save</button></div>
+            </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src={% static 'script/bug.js' %}></script>
+</body>
+
+</html>
